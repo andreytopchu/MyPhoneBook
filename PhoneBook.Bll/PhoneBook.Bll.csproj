@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PhoneBook.Dal\PhoneBook.Dal.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Models\PhoneData.cs">
+        <DependentUpon>UserData.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Models\GroupDto.cs">
+        <DependentUpon>UserData.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Models\AddressDto.cs">
+        <DependentUpon>UserData.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Models\PhoneCategoryDto.cs">
+        <DependentUpon>UserData.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Services\GroupService.cs">
+        <DependentUpon>IGroupService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Services\PhoneCategoryService.cs">
+        <DependentUpon>IPhoneCategoryService.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Services\UserDataService.cs">
+        <DependentUpon>IUserDataService.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.1" />
+    </ItemGroup>
+
+</Project>
