@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Bll.Models;
 using PhoneBook.Bll.Services;
-using Shared.Bll.Controllers;
+using Shared.Controllers;
 
 namespace PhoneBook.Controllers;
 
@@ -21,6 +21,7 @@ public class PhoneCategoryController : BaseController
     /// Получить все категории
     /// </summary>
     /// <param name="request">Дто для фитрации и пагинации</param>
+    [HttpGet]
     public async Task<ActionResult<PhoneCategoryDto[]>> Get(FilterRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _categoryService.Get(request, cancellationToken));
@@ -30,6 +31,7 @@ public class PhoneCategoryController : BaseController
     /// Сохранить данные о категории
     /// </summary>
     /// <param name="request">Запрос на сохранение данных о категории</param>
+    [HttpPost]
     public async Task<ActionResult<PhoneCategoryDto>> Save(SaveCategoryRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _categoryService.Save(request, cancellationToken));
@@ -39,6 +41,7 @@ public class PhoneCategoryController : BaseController
     /// Удалить категорию
     /// </summary>
     /// <param name="categoryId">Id категории</param>
+    [HttpDelete]
     public async Task<IActionResult> Delete([FromQuery] Guid categoryId, CancellationToken cancellationToken)
     {
         await _categoryService.Delete(categoryId, cancellationToken);

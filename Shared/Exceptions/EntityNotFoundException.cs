@@ -1,4 +1,4 @@
-﻿namespace Shared.Bll.Exceptions
+﻿namespace Shared.Exceptions
 {
     public class EntityNotFoundException : Exception
     {

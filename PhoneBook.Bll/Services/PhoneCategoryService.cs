@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using PhoneBook.Bll.Models;
 using PhoneBook.Dal;
 using PhoneBook.Dal.Models;
-using Shared.Bll.Exceptions;
+using Shared.Exceptions;
 
 namespace PhoneBook.Bll.Services;
 
-public class PhoneCategoryService
+public class PhoneCategoryService : IPhoneCategoryService
 {
     private readonly PhoneBookDbContext _dbContext;
     private readonly IMapper _mapper;
@@ -18,18 +18,18 @@ public class PhoneCategoryService
         _mapper = mapper;
     }
 
-    public async Task<PhoneCategoryDto[]> Get(string? searchPhrase, int? page, int? size, CancellationToken cancellationToken)
+    public async Task<PhoneCategoryDto[]> Get(FilterRequest filter, CancellationToken cancellationToken)
     {
         var query = _dbContext.PhoneCategories.Where(x => !x.DeletedUtc.HasValue);
 
-        if (!string.IsNullOrWhiteSpace(searchPhrase))
+        if (!string.IsNullOrWhiteSpace(filter.SearchPhrase))
         {
-            query = query.Where(x => EF.Functions.ILike(x.Name, $"%{searchPhrase}%"));
+            query = query.Where(x => EF.Functions.ILike(x.Name, $"%{filter.SearchPhrase}%"));
         }
 
-        if (page > 1 && size > 0)
+        if (filter.Page > 1 && filter.Size > 0)
         {
-            query = query.OrderBy(x => x.Name).Skip(size.Value * (page.Value - 1)).Take(size.Value);
+            query = query.OrderBy(x => x.Name).Skip(filter.Size.Value * (filter.Page.Value - 1)).Take(filter.Size.Value);
         }
 
         var categories = await query.ToArrayAsync(cancellationToken);

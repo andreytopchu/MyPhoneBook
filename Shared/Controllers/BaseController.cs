@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Shared.Bll.Controllers
+namespace Shared.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]

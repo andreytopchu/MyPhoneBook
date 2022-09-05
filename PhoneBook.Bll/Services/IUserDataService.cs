@@ -2,15 +2,32 @@
 
 namespace PhoneBook.Bll.Services;
 
+/// <summary>
+/// Интерфейс для управления абонентами
+/// </summary>
 public interface IUserDataService
 {
-    //Получение данных об абонентах с пагинацией
-    //Получение полных данных об абоненте
-    //Добавление данных об абонементе
-    //Обновление абонента
-    //Удаление абонента
+    /// <summary>
+    /// Получить всех абонентов с фильтрацией
+    /// </summary>
+    /// <param name="request">Запрос на фильтрацию</param>
+    public Task<UserShortDataDto> GetUsers(FilterRequest request, CancellationToken cancellationToken);
 
-    public Task<UserShortDataDto> GetUsers();
+    /// <summary>
+    /// Получить полные данные об абоненте
+    /// </summary>
+    /// <param name="userId">Идентификатор абонета</param>
     public Task<UserData> GetUserData(Guid userId, CancellationToken cancellationToken);
-    
+
+    /// <summary>
+    /// Сохранить данные абонента
+    /// </summary>
+    /// <param name="request">Запрос на сохранение данных абонента</param>
+    public Task<UserData> Save(SaveUserRequest request, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Удаление абонента
+    /// </summary>
+    /// <param name="userId">Идентификатор абонента</param>
+    public Task Delete(Guid userId, CancellationToken cancellationToken);
 }

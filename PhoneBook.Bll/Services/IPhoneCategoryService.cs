@@ -2,6 +2,9 @@
 
 namespace PhoneBook.Bll.Services;
 
+/// <summary>
+/// Интерфейс для управления категориями
+/// </summary>
 public interface IPhoneCategoryService
 {
     /// <summary>

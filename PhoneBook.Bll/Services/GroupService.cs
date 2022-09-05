@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PhoneBook.Bll.Models;
 using PhoneBook.Dal;
 using PhoneBook.Dal.Models;
-using Shared.Bll.Exceptions;
+using Shared.Exceptions;
 
 namespace PhoneBook.Bll.Services;
 

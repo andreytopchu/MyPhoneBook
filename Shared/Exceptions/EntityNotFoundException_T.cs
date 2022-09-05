@@ -1,4 +1,4 @@
-﻿namespace Shared.Bll.Exceptions
+﻿namespace Shared.Exceptions
 {
     /// <summary>
     /// Исключение при невозможности обнаружить объект по переданным параметрам.

@@ -33,6 +33,9 @@
       <Compile Update="Services\UserDataService.cs">
         <DependentUpon>IUserDataService.cs</DependentUpon>
       </Compile>
+      <Compile Update="Models\SavePhoneNumberRequest.cs">
+        <DependentUpon>SaveUserRequest.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

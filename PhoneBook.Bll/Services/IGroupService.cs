@@ -2,6 +2,9 @@
 
 namespace PhoneBook.Bll.Services;
 
+/// <summary>
+/// Интерфейс для управления группами
+/// </summary>
 public interface IGroupService
 {
     /// <summary>
