@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PhoneBook.Dal.Enums;
 
 namespace PhoneBook.Bll.Models;
 
@@ -50,4 +51,19 @@ public class SaveUserRequest
     /// Адрес
     /// </summary>
     public AddressDto Address { get; set; }
+
+    /// <summary>
+    /// Пол
+    /// </summary>
+    public GenderType Gender { get; set; }
+
+    /// <summary>
+    /// Дата рождения
+    /// </summary>
+    public DateTime? DateOfBirth { get; set; }
+
+    /// <summary>
+    /// Email
+    /// </summary>
+    public string? Email { get; set; }
 }

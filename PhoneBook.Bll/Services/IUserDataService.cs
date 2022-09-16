@@ -10,8 +10,9 @@ public interface IUserDataService
     /// <summary>
     /// Получить всех абонентов с фильтрацией
     /// </summary>
-    /// <param name="request">Запрос на фильтрацию</param>
-    public Task<UserShortDataDto> GetUsers(FilterRequest request, CancellationToken cancellationToken);
+    /// <param name="filter">Запрос на фильтрацию</param>
+    /// <param name="cancellationToken"></param>
+    public Task<UserShortDataDto[]> GetUsers(FilterRequest filter, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получить полные данные об абоненте

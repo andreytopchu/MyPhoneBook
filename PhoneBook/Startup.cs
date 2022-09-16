@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using PhoneBook.Bll.Options;
 using PhoneBook.Dal;
 using PhoneBook.Dal.Migrations;
 using Shared.ApiVersion;
@@ -36,6 +37,9 @@ namespace PhoneBook
         public void ConfigureServices(IServiceCollection services)
         {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+            //options
+            services.AddOptions<FileOptions>();
 
             var mvcBuilder = services.AddControllers().AddJsonOptions(options =>
             {

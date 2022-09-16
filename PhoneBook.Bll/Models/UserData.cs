@@ -1,4 +1,6 @@
-﻿namespace PhoneBook.Bll.Models
+﻿using PhoneBook.Dal.Enums;
+
+namespace PhoneBook.Bll.Models
 {
     /// <summary>
     /// Дто для получения данных пользователя
@@ -12,6 +14,8 @@
         public PhoneData[] Phones { get; set; }
         public AddressDto Address { get; set; }
         public GroupDto[] Groups { get; set; }
+        public string Email { get; set; } = null!;
+        public GenderType Gender { get; set; }
         public string? ImageUrl { get; set; }
     }
 }

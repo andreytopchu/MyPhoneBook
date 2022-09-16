@@ -1,7 +1,9 @@
-﻿using Dex.Ef.Contracts;
+﻿using System.Runtime.CompilerServices;
+using Dex.Ef.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Internal;
 using Npgsql;
+using PhoneBook.Dal.Enums;
 using PhoneBook.Dal.Models;
 using Shared.Dal;
 
@@ -9,7 +11,8 @@ namespace PhoneBook.Dal
 {
     public class PhoneBookDbContext : BaseDbContext<PhoneBookDbContext>
     {
-        public PhoneBookDbContext(ISystemClock clock, IModelStore modelStore, INpgsqlNameTranslator nameTranslator, DbContextOptions<PhoneBookDbContext> options) : base(clock, modelStore, nameTranslator, options)
+        public PhoneBookDbContext(ISystemClock clock, IModelStore modelStore, INpgsqlNameTranslator nameTranslator,
+            DbContextOptions<PhoneBookDbContext> options) : base(clock, modelStore, nameTranslator, options)
         {
         }
 
@@ -18,5 +21,13 @@ namespace PhoneBook.Dal
         public DbSet<GroupDb> Groups => Set<GroupDb>();
         public DbSet<PhoneCategoryDb> PhoneCategories => Set<PhoneCategoryDb>();
         public DbSet<PhoneDataDb> Phones => Set<PhoneDataDb>();
+
+#pragma warning disable CA2255
+        [ModuleInitializer]
+#pragma warning restore CA2255
+        public static void RegisterEnums()
+        {
+            RegisterEnum<GenderType>();
+        }
     }
 }

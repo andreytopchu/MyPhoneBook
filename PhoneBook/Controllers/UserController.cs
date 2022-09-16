@@ -22,7 +22,7 @@ public class UserController : BaseController
     /// </summary>
     /// <param name="request">Запрос на фильтрацию</param>
     [HttpGet]
-    public async Task<ActionResult<UserShortDataDto>> GetUsers(FilterRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserShortDataDto[]>> GetUsers(FilterRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _userDataService.GetUsers(request, cancellationToken));
     }

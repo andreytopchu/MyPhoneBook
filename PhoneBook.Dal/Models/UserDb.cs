@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Dex.Ef.Contracts.Entities;
+using PhoneBook.Dal.Enums;
 
 namespace PhoneBook.Dal.Models;
 
@@ -34,9 +35,18 @@ public class UserDb : ICreatedUtc, IDeletable, IUpdatedUtc
     public string? MiddleName { get; set; }
 
     [Column("image_url")]
-    public string ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
-    public AddressDb Address { get; set; }
+    [Column("gender")]
+    public GenderType Gender { get; set; }
+
+    [Column("date_of_birth")]
+    public DateTime? DateOfBirth { get; set; }
+
+    [Column("email")]
+    public string? Email { get; set; }
+
+    public AddressDb? Address { get; set; }
     public ICollection<GroupDb> Groups { get; set; }
     public ICollection<PhoneDataDb> Phones { get; set; }
 }

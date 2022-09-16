@@ -46,7 +46,7 @@ public class PhoneCategoryService : IPhoneCategoryService
         if (categoryDb == null)
         {
             categoryDb = _mapper.Map<PhoneCategoryDb>(request);
-            _dbContext.Add(categoryDb);
+            await _dbContext.AddAsync(categoryDb, cancellationToken);
         }
         else
         {

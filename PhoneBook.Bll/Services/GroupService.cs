@@ -46,7 +46,7 @@ public class GroupService : IGroupService
         if (groupDb == null)
         {
             groupDb = _mapper.Map<GroupDb>(request);
-            _dbContext.Add(groupDb);
+            await _dbContext.AddAsync(groupDb, cancellationToken);
         }
         else
         {

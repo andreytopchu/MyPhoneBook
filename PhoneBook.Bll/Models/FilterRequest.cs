@@ -1,4 +1,6 @@
-﻿namespace PhoneBook.Bll.Models;
+﻿using PhoneBook.Bll.Enums;
+
+namespace PhoneBook.Bll.Models;
 
 /// <summary>
 /// Дто для фильтрации и пагинации
@@ -9,6 +11,11 @@ public class FilterRequest
     /// Фраза для поиска
     /// </summary>
     public string? SearchPhrase { get; set; }
+
+    /// <summary>
+    /// По какому полю выполнять поиск
+    /// </summary>
+    public SearchPlaceType SearchPlaceType { get; set; }
 
     /// <summary>
     /// Номер старницы
