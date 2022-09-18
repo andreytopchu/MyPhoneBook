@@ -23,7 +23,7 @@ public class UserDataService : IUserDataService
     {
         var query = _dbContext.Users.Where(x => !x.DeletedUtc.HasValue);
 
-        if (!string.IsNullOrWhiteSpace(filter.SearchPhrase))
+        if (!string.IsNullOrWhiteSpace(filter.SearchPhrase) && filter.SearchPhrase != null)
         {
             var pattern = $"%{filter.SearchPhrase}%";
             switch (filter.SearchPlaceType)
@@ -48,7 +48,8 @@ public class UserDataService : IUserDataService
             query = query.OrderBy(x => x.LastName).ThenBy(x=>x.FirstName).Skip(filter.Size.Value * (filter.Page.Value - 1)).Take(filter.Size.Value);
         }
 
-        var userDbs = await query.ToArrayAsync(cancellationToken);
+        var userDbs = await query
+            .Include(x=>x.Groups).ToArrayAsync(cancellationToken);
 
         return _mapper.Map<UserShortDataDto[]>(userDbs);
     }
@@ -84,6 +85,11 @@ public class UserDataService : IUserDataService
         else
         {
             _mapper.Map(request, userDb);
+        }
+
+        if (request.GroupIds.Any())
+        {
+            userDb.Groups = await _dbContext.Groups.Where(x => request.GroupIds.Contains(x.Id)).ToListAsync(cancellationToken);
         }
 
         await _dbContext.SaveChangesAsync(cancellationToken);

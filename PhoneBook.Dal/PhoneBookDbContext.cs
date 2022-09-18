@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Dex.Ef.Contracts;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Internal;
 using Npgsql;
 using PhoneBook.Dal.Enums;
 using PhoneBook.Dal.Models;

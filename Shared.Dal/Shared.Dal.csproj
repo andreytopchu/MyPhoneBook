@@ -18,4 +18,10 @@
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Authentication">
+        <HintPath>..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.6\Microsoft.AspNetCore.Authentication.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

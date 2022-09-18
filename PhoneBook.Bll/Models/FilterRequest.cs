@@ -15,7 +15,7 @@ public class FilterRequest
     /// <summary>
     /// По какому полю выполнять поиск
     /// </summary>
-    public SearchPlaceType SearchPlaceType { get; set; }
+    public SearchPlaceType? SearchPlaceType { get; set; }
 
     /// <summary>
     /// Номер старницы

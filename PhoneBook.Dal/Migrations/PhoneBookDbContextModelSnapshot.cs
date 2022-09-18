@@ -37,7 +37,7 @@ namespace PhoneBook.Dal.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("GroupDbUserDb");
+                    b.ToTable("GroupDbUserDb", (string)null);
                 });
 
             modelBuilder.Entity("PhoneBook.Dal.Models.AddressDb", b =>
@@ -95,7 +95,7 @@ namespace PhoneBook.Dal.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("address");
+                    b.ToTable("address", (string)null);
                 });
 
             modelBuilder.Entity("PhoneBook.Dal.Models.GroupDb", b =>
@@ -133,7 +133,7 @@ namespace PhoneBook.Dal.Migrations
 
                     b.HasIndex("DeletedUtc");
 
-                    b.ToTable("group");
+                    b.ToTable("group", (string)null);
                 });
 
             modelBuilder.Entity("PhoneBook.Dal.Models.PhoneCategoryDb", b =>
@@ -171,7 +171,7 @@ namespace PhoneBook.Dal.Migrations
 
                     b.HasIndex("DeletedUtc");
 
-                    b.ToTable("phone_category");
+                    b.ToTable("phone_category", (string)null);
                 });
 
             modelBuilder.Entity("PhoneBook.Dal.Models.PhoneDataDb", b =>
@@ -217,7 +217,7 @@ namespace PhoneBook.Dal.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("phone_data");
+                    b.ToTable("phone_data", (string)null);
                 });
 
             modelBuilder.Entity("PhoneBook.Dal.Models.UserDb", b =>
@@ -280,7 +280,7 @@ namespace PhoneBook.Dal.Migrations
 
                     b.HasIndex("DeletedUtc");
 
-                    b.ToTable("user");
+                    b.ToTable("user", (string)null);
                 });
 
             modelBuilder.Entity("GroupDbUserDb", b =>

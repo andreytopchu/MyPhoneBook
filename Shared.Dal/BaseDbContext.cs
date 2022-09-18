@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Dex.Ef.Contracts;
 using Dex.Ef.Contracts.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Internal;
 using Npgsql;
 
 namespace Shared.Dal

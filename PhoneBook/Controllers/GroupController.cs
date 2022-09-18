@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Bll.Models;
 using PhoneBook.Bll.Services;
-using Shared.Controllers;
 
 namespace PhoneBook.Controllers;
 
-public class GroupController : BaseController
+[ApiController]
+[Route("[controller]/[action]")]
+public class GroupController : ControllerBase
 {
     private readonly IGroupService _groupService;
 
@@ -22,7 +23,7 @@ public class GroupController : BaseController
     /// </summary>
     /// <param name="request">Дто для фитрации и пагинации</param>
     [HttpGet]
-    public async Task<ActionResult<GroupDto[]>> Get(FilterRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<GroupDto[]>> Get([FromQuery] FilterRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _groupService.Get(request, cancellationToken));
     }
@@ -32,7 +33,7 @@ public class GroupController : BaseController
     /// </summary>
     /// <param name="request">Запрос на сохранение данных о группе</param>
     [HttpPost]
-    public async Task<ActionResult<GroupDto>> Save(SaveGroupRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<GroupDto>> Save([FromBody] SaveGroupRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _groupService.Save(request, cancellationToken));
     }

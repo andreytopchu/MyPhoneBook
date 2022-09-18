@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Bll.Services;
-using Shared.Controllers;
 
 namespace PhoneBook.Controllers;
 
-public class FileController : BaseController
+[ApiController]
+[Route("[controller]/[action]")]
+public class FileController : ControllerBase
 {
     private readonly IFileService _fileService;
 
@@ -30,7 +31,7 @@ public class FileController : BaseController
     /// Сохранение картинки
     /// </summary>
     [HttpPost]
-    public async Task<ActionResult<string>> AddImage(IFormFile image, CancellationToken cancellationToken)
+    public async Task<string> AddImage(IFormFile image, CancellationToken cancellationToken)
     {
         return await _fileService.SaveImage(image, cancellationToken);
     }

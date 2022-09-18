@@ -41,6 +41,11 @@ public class PhoneCategoryService : IPhoneCategoryService
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
 
+        if (await GetCategoryByName(request.Name, cancellationToken) != null)
+        {
+            throw new EntityExistException(request.Name, nameof(PhoneCategoryDb));
+        }
+
         var categoryDb = await GetCategoryById(request.Id, cancellationToken);
 
         if (categoryDb == null)
@@ -55,7 +60,7 @@ public class PhoneCategoryService : IPhoneCategoryService
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<PhoneCategoryDto>(GetCategoryById(categoryDb.Id, cancellationToken));
+        return _mapper.Map<PhoneCategoryDto>(await GetCategoryById(categoryDb.Id, cancellationToken));
     }
 
     public async Task Delete(Guid categoryId, CancellationToken cancellationToken)
@@ -72,5 +77,10 @@ public class PhoneCategoryService : IPhoneCategoryService
     private async Task<PhoneCategoryDb?> GetCategoryById(Guid? id, CancellationToken cancellationToken)
     {
         return await _dbContext.PhoneCategories.SingleOrDefaultAsync(x => x.Id == id && !x.DeletedUtc.HasValue, cancellationToken);
+    }
+
+    private async Task<PhoneCategoryDb?> GetCategoryByName(string name, CancellationToken cancellationToken)
+    {
+        return await _dbContext.PhoneCategories.SingleOrDefaultAsync(x => x.Name == name && !x.DeletedUtc.HasValue, cancellationToken);
     }
 }

@@ -35,12 +35,12 @@ public class FileService : IFileService
         if (!FileExtensions.ImageExtensions.Contains(fileExtension)) throw new FileBadFormatException(fileExtension);
 
         var fileName = Guid.NewGuid() + fileExtension;
-        var filePath = Path.Combine(new[] {_fileOptions.BasePath, fileName});
+        var filePath = GetPath(_fileOptions.AbsoluteImgPath, fileName);
 
         await using Stream fileStream = new FileStream(filePath, FileMode.Create);
-        await formFile.CopyToAsync(fileStream, cancellationToken);
 
-        return filePath;
+        await formFile.CopyToAsync(fileStream, cancellationToken);
+        return Path.Combine(_fileOptions.AbsoluteImgPath, fileName);
     }
 
     public async Task<string> Export(CancellationToken cancellationToken)
@@ -48,13 +48,25 @@ public class FileService : IFileService
         var userDbs = await _dbContext.Users.Where(x => !x.DeletedUtc.HasValue)
             .Include(x => x.Phones)
             .Include(x => x.Groups)
+            .Include(x => x.Address)
             .ToArrayAsync(cancellationToken);
 
         var exportUsers = _mapper.Map<ExportUserDataDto[]>(userDbs);
-        var fileName = Guid.NewGuid() + ".xls";
-        var filePath = Path.Combine(new[] {_fileOptions.BasePath, fileName});
+        var fileName = "Export" + DateTime.Now.ToFileTime() + ".xlsx";
+        var filePath = GetPath(_fileOptions.AbsoluteFilePath, fileName);
 
         await _dataProvider.SaveToExelFile(exportUsers, filePath);
         return filePath;
+    }
+
+    public Stream GetImage(string imageName, CancellationToken cancellationToken)
+    {
+        var imageStream = new FileStream(GetPath(_fileOptions.AbsoluteImgPath, imageName), FileMode.Open);
+        return imageStream;
+    }
+
+    private static string GetPath(string absolutePath, string fileName)
+    {
+        return Path.GetFullPath(@"..\") + absolutePath.Replace('/', '\\') + fileName;
     }
 }

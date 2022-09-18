@@ -1,7 +1,7 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Internal;
 using Npgsql;
 using Shared.Dal;
 

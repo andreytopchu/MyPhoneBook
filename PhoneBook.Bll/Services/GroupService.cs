@@ -27,7 +27,7 @@ public class GroupService : IGroupService
             query = query.Where(x => EF.Functions.ILike(x.Name, $"%{filter.SearchPhrase}%"));
         }
 
-        if (filter.Page > 1 && filter.Size > 0)
+        if (filter.Page > 0 && filter.Size > 0)
         {
             query = query.OrderBy(x => x.Name).Skip(filter.Size.Value * (filter.Page.Value - 1)).Take(filter.Size.Value);
         }
@@ -40,6 +40,11 @@ public class GroupService : IGroupService
     public async Task<GroupDto> Save(SaveGroupRequest request, CancellationToken cancellationToken)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
+
+        if (await GetGroupByName(request.Name, cancellationToken) != null)
+        {
+            throw new EntityExistException(request.Name, nameof(GroupDb));
+        }
 
         var groupDb = await GetGroupById(request.Id, cancellationToken);
 
@@ -55,7 +60,7 @@ public class GroupService : IGroupService
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<GroupDto>(GetGroupById(groupDb.Id, cancellationToken));
+        return _mapper.Map<GroupDto>(await GetGroupById(groupDb.Id, cancellationToken));
     }
 
     public async Task Delete(Guid groupId, CancellationToken cancellationToken)
@@ -72,5 +77,10 @@ public class GroupService : IGroupService
     private async Task<GroupDb?> GetGroupById(Guid? id, CancellationToken cancellationToken)
     {
         return await _dbContext.Groups.SingleOrDefaultAsync(x => x.Id == id && !x.DeletedUtc.HasValue, cancellationToken);
+    }
+
+    private async Task<GroupDb?> GetGroupByName(string name, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Groups.SingleOrDefaultAsync(x => x.Name == name && !x.DeletedUtc.HasValue, cancellationToken);
     }
 }

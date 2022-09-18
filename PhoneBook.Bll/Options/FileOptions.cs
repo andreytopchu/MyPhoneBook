@@ -2,5 +2,6 @@
 
 public class FileOptions
 {
-    public string BasePath { get; set; } = null!;
+    public string AbsoluteImgPath { get; set; } = null!;
+    public string AbsoluteFilePath { get; set; } = null!;
 }

@@ -4,11 +4,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Bll.Models;
 using PhoneBook.Bll.Services;
-using Shared.Controllers;
 
 namespace PhoneBook.Controllers;
 
-public class UserController : BaseController
+[ApiController]
+[Route("[controller]/[action]")]
+public class UserController : ControllerBase
 {
     private readonly IUserDataService _userDataService;
 
@@ -22,7 +23,7 @@ public class UserController : BaseController
     /// </summary>
     /// <param name="request">Запрос на фильтрацию</param>
     [HttpGet]
-    public async Task<ActionResult<UserShortDataDto[]>> GetUsers(FilterRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserShortDataDto[]>> GetUsers([FromQuery] FilterRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _userDataService.GetUsers(request, cancellationToken));
     }
@@ -32,7 +33,7 @@ public class UserController : BaseController
     /// </summary>
     /// <param name="userId">Идентификатор абонета</param>
     [HttpGet]
-    public async Task<ActionResult<UserData>> GetUserData(Guid userId, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserData>> GetUserData([FromQuery] Guid userId, CancellationToken cancellationToken)
     {
         return Ok(await _userDataService.GetUserData(userId, cancellationToken));
     }
@@ -42,7 +43,7 @@ public class UserController : BaseController
     /// </summary>
     /// <param name="request">Запрос на сохранение данных абонента</param>
     [HttpPost]
-    public async Task<ActionResult<UserData>> Save(SaveUserRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserData>> Save([FromBody] SaveUserRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _userDataService.Save(request, cancellationToken));
     }
@@ -52,7 +53,7 @@ public class UserController : BaseController
     /// </summary>
     /// <param name="userId">Идентификатор абонента</param>
     [HttpDelete]
-    public async Task<IActionResult> Delete(Guid userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromQuery] Guid userId, CancellationToken cancellationToken)
     {
         await _userDataService.Delete(userId, cancellationToken);
         return Ok();
