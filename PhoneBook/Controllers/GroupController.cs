@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBook.Bll.Models;
 using PhoneBook.Bll.Services;
@@ -23,6 +24,7 @@ public class GroupController : ControllerBase
     /// </summary>
     /// <param name="request">Дто для фитрации и пагинации</param>
     [HttpGet]
+    [EnableCors]
     public async Task<ActionResult<GroupDto[]>> Get([FromQuery] FilterRequest request, CancellationToken cancellationToken)
     {
         return Ok(await _groupService.Get(request, cancellationToken));

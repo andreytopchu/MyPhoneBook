@@ -20,6 +20,7 @@ using PhoneBook.Dal.Migrations;
 using Shared.ApiVersion;
 using Shared.Dal;
 using Shared.ExceptionFilter;
+using Shared.Extensions;
 using Shared.Services;
 using Shared.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -100,12 +101,8 @@ namespace PhoneBook
         {
             app.UseRouting();
 
-            // CORS - Allow calling the API from WebBrowsers
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()
-                .WithOrigins("https://localhost:5000"));
+            app.UseCors();
+            app.UseCorsMiddleware();
 
             app.UseEndpoints(builder => { builder.MapControllers(); });
 
