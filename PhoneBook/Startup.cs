@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -100,9 +99,15 @@ namespace PhoneBook
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseRouting();
-            app.UseEndpoints(builder => { ConfigureEndpoints(builder); });
 
-            app.UseHttpsRedirection();
+            // CORS - Allow calling the API from WebBrowsers
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+                .WithOrigins("https://localhost:5000"));
+
+            app.UseEndpoints(builder => { builder.MapControllers(); });
 
             // check automapper config
             var provider = app.ApplicationServices.GetRequiredService<IConfigurationProvider>();
@@ -150,11 +155,6 @@ namespace PhoneBook
 
                     throw new InvalidOperationException("Unable to determine tag for endpoint.");
                 });
-        }
-
-        private void ConfigureEndpoints(IEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapControllers();
         }
     }
 }
