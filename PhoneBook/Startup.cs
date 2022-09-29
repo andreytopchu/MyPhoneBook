@@ -95,6 +95,13 @@ namespace PhoneBook
             // swagger
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen(ConfigureSwagger);
+
+            //CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(options.DefaultPolicyName,
+                    policy => { policy.WithOrigins().AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod(); });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -9,7 +9,7 @@
         "ASPNETCORE_ENVIRONMENT": "local",
         "ASPNETCORE_Kestrel__Certificates__Default__Password": ""
       },
-      "applicationUrl": "https://localhost:5000",
+      "applicationUrl": "http://localhost:5000",
       "dotnetRunMessages": "true"
     }
   }
