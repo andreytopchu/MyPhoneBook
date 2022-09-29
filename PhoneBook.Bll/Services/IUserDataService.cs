@@ -12,13 +12,7 @@ public interface IUserDataService
     /// </summary>
     /// <param name="filter">Запрос на фильтрацию</param>
     /// <param name="cancellationToken"></param>
-    public Task<UserShortDataDto[]> GetUsers(FilterRequest filter, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Получить полные данные об абоненте
-    /// </summary>
-    /// <param name="userId">Идентификатор абонета</param>
-    public Task<UserData> GetUserData(Guid userId, CancellationToken cancellationToken);
+    public Task<UserData[]> GetUsers(FilterRequest filter, CancellationToken cancellationToken);
 
     /// <summary>
     /// Сохранить данные абонента

@@ -29,16 +29,6 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Получить полные данные об абоненте
-    /// </summary>
-    /// <param name="userId">Идентификатор абонета</param>
-    [HttpGet]
-    public async Task<ActionResult<UserData>> GetUserData([FromQuery] Guid userId, CancellationToken cancellationToken)
-    {
-        return Ok(await _userDataService.GetUserData(userId, cancellationToken));
-    }
-
-    /// <summary>
     /// Сохранить данные абонента
     /// </summary>
     /// <param name="request">Запрос на сохранение данных абонента</param>

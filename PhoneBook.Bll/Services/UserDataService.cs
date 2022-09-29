@@ -19,7 +19,7 @@ public class UserDataService : IUserDataService
         _mapper = mapper;
     }
 
-    public async Task<UserShortDataDto[]> GetUsers(FilterRequest filter, CancellationToken cancellationToken)
+    public async Task<UserData[]> GetUsers(FilterRequest filter, CancellationToken cancellationToken)
     {
         var query = _dbContext.Users.Where(x => !x.DeletedUtc.HasValue);
 
@@ -49,22 +49,12 @@ public class UserDataService : IUserDataService
         }
 
         var userDbs = await query
-            .Include(x=>x.Groups).ToArrayAsync(cancellationToken);
-
-        return _mapper.Map<UserShortDataDto[]>(userDbs);
-    }
-
-    public async Task<UserData> GetUserData(Guid userId, CancellationToken cancellationToken)
-    {
-        var userDb = await _dbContext.Users
             .Include(x => x.Address)
             .Include(x => x.Groups)
             .Include(x => x.Phones).ThenInclude(x => x.Category)
-            .SingleOrDefaultAsync(x => x.Id == userId && !x.DeletedUtc.HasValue, cancellationToken);
+            .ToArrayAsync(cancellationToken);
 
-        if (userDb == null) throw new EntityNotFoundException<UserDb>(userId.ToString());
-
-        return _mapper.Map<UserData>(userDb);
+        return _mapper.Map<UserData[]>(userDbs);
     }
 
     public async Task<UserData> Save(SaveUserRequest request, CancellationToken cancellationToken)
